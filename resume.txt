@@ -1,0 +1,7 @@
+Name: Alex C.
+Role: Senior Frontend Engineer
+Skills: React, TypeScript, Deno, Node.js, Tailwind CSS.
+Experience: 
+- 3 years building e-commerce dashboards.
+- Led a team of 4 developers.
+- Optimized React performance improving load times by 40%.

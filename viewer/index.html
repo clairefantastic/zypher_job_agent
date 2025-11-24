@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobFit AI Analyzer</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="header">
+    <h1>🎯 JobFit AI Analyzer</h1>
+    <p>AI-powered job application analysis and optimization</p>
+  </div>
+
+  <div class="container">
+    <!-- Input Form -->
+    <div class="input-section" id="inputSection">
+      <h2>Start New Analysis</h2>
+      
+      <div class="form-group">
+        <label for="jobUrl">Job Posting URL *</label>
+        <input 
+          type="url" 
+          id="jobUrl" 
+          placeholder="https://jobs.ashbyhq.com/company/job-id"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="resume">Your Resume *</label>
+        <textarea 
+          id="resume" 
+          rows="10" 
+          placeholder="Paste your resume text here...&#10;&#10;Name: John Doe&#10;Experience: Senior Developer at XYZ Corp...&#10;Skills: React, Python, AWS..."
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="linkedin">LinkedIn Profile (Optional)</label>
+        <textarea 
+          id="linkedin" 
+          rows="5" 
+          placeholder="Paste LinkedIn profile text (optional)"
+        ></textarea>
+      </div>
+
+      <button id="analyzeBtn" class="btn-primary">
+        🚀 Analyze Job Fit
+      </button>
+    </div>
+
+    <!-- Progress Section -->
+    <div class="progress-section" id="progressSection" style="display: none;">
+      <h2>Analysis in Progress...</h2>
+      <div class="progress-steps">
+  <div class="timeline">
+    <div class="timeline-line"></div>
+
+    <div class="step" data-step="1">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">📡 Scraping job posting</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+
+    <div class="step" data-step="2">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">📋 Parsing job details</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+
+    <div class="step" data-step="3">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">👤 Analyzing resume</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+
+    <div class="step" data-step="4">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">🧩 Computing gaps</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+
+    <div class="step" data-step="5">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">🏢 Getting company insights</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+
+    <div class="step" data-step="6">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">📊 Scoring match</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+
+    <div class="step" data-step="7">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">✉️ Writing cover letter</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+
+    <div class="step" data-step="8">
+      <div class="bullet"></div>
+      <div class="step-content">
+        <div class="step-title">✨ Generating improvements</div>
+        <div class="step-status">⏳</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p class="progress-text" id="progressText">Starting analysis...</p>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-section" id="resultsSection" style="display: none;">
+      <div class="results-header">
+        <h2>Analysis Complete! ✅</h2>
+        <button id="newAnalysisBtn" class="btn-secondary">Start New Analysis</button>
+      </div>
+      <div id="reportContent" class="markdown-body"></div>
+      <div class="download-section">
+        <button id="downloadBtn" class="btn-primary">📥 Download Report</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

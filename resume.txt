@@ -1,7 +1,38 @@
-Name: Alex C.
-Role: Senior Frontend Engineer
-Skills: React, TypeScript, Deno, Node.js, Tailwind CSS.
-Experience: 
-- 3 years building e-commerce dashboards.
-- Led a team of 4 developers.
-- Optimized React performance improving load times by 40%.
+ALEX JOHNSON
+Full Stack Software Engineer
+alex.johnson@email.com | (555) 123-4567 | San Francisco, CA
+LinkedIn: linkedin.com/in/alexjohnson | GitHub: github.com/alexjohnson
+
+PROFESSIONAL SUMMARY
+Passionate Full Stack Software Engineer with 5+ years of experience building scalable web applications. Expertise in JavaScript/TypeScript, React, Node.js, and cloud platforms. Proven track record of delivering high-quality products in fast-paced startup environments.
+
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, Python, SQL, HTML/CSS
+Frontend: React, Next.js, Vue.js, Redux, Tailwind CSS
+Backend: Node.js, Express, Django, REST APIs, GraphQL
+Databases: PostgreSQL, MongoDB, Redis
+Cloud & DevOps: AWS (EC2, S3, Lambda), Docker, CI/CD, Git
+Tools: VS Code, Figma, Postman, Jira, Slack
+
+PROFESSIONAL EXPERIENCE
+
+Senior Software Engineer | TechStart Inc. | San Francisco, CA
+June 2021 - Present
+- Led development of customer-facing dashboard serving 50K+ daily active users
+- Architected microservices backend using Node.js and Express, improving API response time by 40%
+- Implemented real-time features using WebSockets and Redis pub/sub
+- Mentored 3 junior engineers and conducted code reviews
+- Collaborated with product and design teams using agile methodologies
+
+Software Engineer | Digital Solutions Co. | Remote
+January 2019 - May 2021
+- Built responsive web applications using React and TypeScript
+- Developed RESTful APIs and integrated third-party services
+- Optimized database queries, reducing load time by 35%
+- Wrote comprehensive unit and integration tests (Jest, Cypress)
+- Participated in on-call rotation and resolved production incidents
+
+EDUCATION
+Bachelor of Science in Computer Science
+University of California, Berkeley | Graduated May 2017
+GPA: 3.7/4.0

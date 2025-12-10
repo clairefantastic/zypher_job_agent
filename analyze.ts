@@ -14,12 +14,12 @@ import { generateCareerVisualizations } from "./agents/visualizer.ts";
 
 const jobUrl = Deno.args[0];
 if (!jobUrl) {
-  console.error("❌ Usage: deno run -A analyze.ts <JOB_URL>");
+  console.error("Usage: deno run -A analyze.ts <JOB_URL>");
   Deno.exit(1);
 }
 
 // Setup
-console.log("🧠 Initializing...");
+console.log("Initializing...");
 const zypherContext = await createZypherContext(Deno.cwd());
 const agent = new ZypherAgent(
   zypherContext,
@@ -29,7 +29,7 @@ const agent = new ZypherAgent(
 );
 
 // Register MCP
-console.log("🔌 Registering Firecrawl...");
+console.log("Registering Firecrawl...");
 await agent.mcp.registerServer({
   id: "firecrawl",
   type: "command",
@@ -40,43 +40,43 @@ await agent.mcp.registerServer({
   },
 });
 await new Promise((resolve) => setTimeout(resolve, 2000));
-console.log("✅ Ready!\n");
+console.log("Ready!\n");
 
 // Load resume
 let resumeText = "";
 try {
   resumeText = await Deno.readTextFile("./resume.txt");
 } catch {
-  console.error("❌ Missing resume.txt");
+  console.error("Missing resume.txt");
   Deno.exit(1);
 }
 
 // Run pipeline
-console.log("📋 [1/10] Scraping job posting...");
+console.log("[1/10] Scraping job posting...");
 const jobRaw = await scrapeJobPosting(agent, jobUrl);
 
-console.log("📋 [2/10] Parsing job details...");
+console.log("[2/10] Parsing job details...");
 const jobInfo = await parseJobPosting(agent, jobRaw);
 
-console.log("📋 [3/10] Analyzing resume...");
+console.log("[3/10] Analyzing resume...");
 const resumeProfile = await analyzeResume(agent, resumeText, "");
 
-console.log("📋 [4/10] Computing gaps...");
+console.log("[4/10] Computing gaps...");
 const gaps = await analyzeGaps(agent, jobInfo, resumeProfile);
 
-console.log("📋 [5/10] Getting company insights...");
+console.log("[5/10] Getting company insights...");
 const company = await getCompanyInsights(agent, jobUrl, jobInfo);
 
-console.log("📋 [6/10] Scoring match...");
+console.log("[6/10] Scoring match...");
 const score = await scoreMatch(agent, jobInfo, resumeProfile, company, gaps);
 
-console.log("📋 [7/10] Writing cover letter...");
+console.log("[7/10] Writing cover letter...");
 const coverLetter = await writeCoverLetter(agent, jobInfo, resumeProfile, company, score, gaps);
 
-console.log("📋 [8/10] Generating resume improvements...");
+console.log("[8/10] Generating resume improvements...");
 const rewrite = await rewriteResume(agent, jobInfo, resumeProfile, gaps, score);
 
-console.log("📋 [9/10] Preparing interview questions...");
+console.log("[9/10] Preparing interview questions...");
 let interviewPrep = null;
 try {
   const ragCount = await getQuestionCount();
@@ -87,18 +87,18 @@ try {
       resumeText,
       jobInfo.company || "Company"
     );
-    console.log(`✅ Generated ${interviewPrep.questions.length} interview questions`);
+    console.log(`Generated ${interviewPrep.questions.length} interview questions`);
     if (interviewPrep.rag_stats) {
       console.log(`   RAG Stats: ${interviewPrep.rag_stats.total_retrieved} retrieved, avg relevance: ${(interviewPrep.rag_stats.avg_relevance * 100).toFixed(1)}%`);
     }
   } else {
-    console.log("⚠️ RAG database is empty. Run: deno run -A --env agents/seed-questions.ts");
+    console.log("RAG database is empty. Run: deno run -A --env agents/seed-questions.ts");
   }
 } catch (error) {
-  console.error("⚠️ Interview prep failed:", error.message);
+  console.error("Interview prep failed:", error.message);
 }
 
-console.log("📋 [10/10] Generating career visualizations...");
+console.log("[10/10] Generating career visualizations...");
 let visualizations = null;
 try {
   visualizations = await generateCareerVisualizations(
@@ -121,13 +121,13 @@ try {
     visualizations.timeline_svg
   );
   
-  console.log("✅ Visualizations saved to ./output/visualizations/");
+  console.log("Visualizations saved to ./output/visualizations/");
 } catch (error) {
-  console.error("⚠️ Visualization generation failed:", error.message);
+  console.error("Visualization generation failed:", error.message);
 }
 
 // Generate readable output
-console.log("\n📝 Generating report...\n");
+console.log("\nGenerating report...\n");
 
 const output = `# Job Application Analysis
 
@@ -156,7 +156,7 @@ ${company.recent_news && company.recent_news.length > 0 ? `### Recent News\n${co
 
 ## MISSING KEYWORDS
 
-${gaps.strengths && gaps.strengths.length > 0 ? `### ✅ Your Strengths (What You Have)\n${gaps.strengths.map(s => `- ${s}`).join('\n')}\n` : ''}
+${gaps.strengths && gaps.strengths.length > 0 ? `### Your Strengths (What You Have)\n${gaps.strengths.map(s => `- ${s}`).join('\n')}\n` : ''}
 
 ### Technical Skills Not on Resume:
 ${gaps.technical_missing?.map(s => `- ${s}`).join('\n') || gaps.missing_skills?.map(s => `- ${s}`).join('\n') || '- None identified'}
@@ -173,11 +173,11 @@ ${gaps.framework_missing?.map(f => `- ${f}`).join('\n') || '- None identified'}
 ### Certifications:
 ${gaps.certifications_missing?.map(c => `- ${c}`).join('\n') || '- None identified'}
 
-${gaps.addressable_gaps && gaps.addressable_gaps.length > 0 ? `### 💡 Addressable Gaps (Can Highlight in Interview)\n${gaps.addressable_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
+${gaps.addressable_gaps && gaps.addressable_gaps.length > 0 ? `### Addressable Gaps (Can Highlight in Interview)\n${gaps.addressable_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
 
-${gaps.critical_gaps && gaps.critical_gaps.length > 0 ? `### ⚠️ Critical Gaps\n${gaps.critical_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
+${gaps.critical_gaps && gaps.critical_gaps.length > 0 ? `### Critical Gaps\n${gaps.critical_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
 
-${gaps.recommendations && gaps.recommendations.length > 0 ? `### 📋 Recommendations\n${gaps.recommendations.map(r => `- ${r}`).join('\n')}\n` : ''}
+${gaps.recommendations && gaps.recommendations.length > 0 ? `### Recommendations\n${gaps.recommendations.map(r => `- ${r}`).join('\n')}\n` : ''}
 
 ---
 
@@ -212,7 +212,7 @@ ${rewrite.keywords_to_add && rewrite.keywords_to_add.length > 0 ? `### Keywords 
 
 ${rewrite.sections_to_emphasize && rewrite.sections_to_emphasize.length > 0 ? `### Sections to Emphasize\n${rewrite.sections_to_emphasize.map(s => `- ${s}`).join('\n')}\n` : ''}
 
-${rewrite.bullet_improvements && rewrite.bullet_improvements.length > 0 ? `### Bullet Point Improvements\n\n${rewrite.bullet_improvements.map(b => `**${b.section}**\n\n❌ Before:\n> ${b.original}\n\n✅ After:\n> ${b.improved}\n\n💡 Why: ${b.rationale || 'Improves clarity and impact'}\n`).join('\n')}\n` : ''}
+${rewrite.bullet_improvements && rewrite.bullet_improvements.length > 0 ? `### Bullet Point Improvements\n\n${rewrite.bullet_improvements.map(b => `**${b.section}**\n\n Before:\n> ${b.original}\n\n After:\n> ${b.improved}\n\n💡 Why: ${b.rationale || 'Improves clarity and impact'}\n`).join('\n')}\n` : ''}
 
 ---
 
@@ -252,12 +252,6 @@ ${interviewPrep.preparation_tips.map(t => `- ${t}`).join('\n')}
 ## 🎨 CAREER PATH VISUALIZATION
 
 ${visualizations ? `
-### Career Roadmap
-
-\`\`\`mermaid
-${visualizations.mermaid_diagram}
-\`\`\`
-
 ### Interactive Visualizations
 
 The following interactive visualizations have been generated:

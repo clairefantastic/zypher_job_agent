@@ -1,0 +1,47 @@
+<svg width="1000" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1000" height="400" fill="#f9f9f9"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#333">
+    12-Month Career Development Timeline
+  </text>
+  
+  <!-- Timeline line -->
+  <line x1="100" y1="200" x2="900" y2="200" stroke="#667eea" stroke-width="4"/>
+  
+  <!-- Start point -->
+  <circle cx="100" cy="200" r="12" fill="#667eea"/>
+  <text x="100" y="240" text-anchor="middle" font-size="14" fill="#333">Start</text>
+  <text x="100" y="260" text-anchor="middle" font-size="12" fill="#666">Current Role</text>
+  
+  <!-- Q1 Milestone -->
+  <circle cx="300" cy="200" r="10" fill="#764ba2"/>
+  <text x="300" y="180" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Q1</text>
+  <text x="300" y="240" text-anchor="middle" font-size="12" fill="#666">Learn Java</text>
+  
+  <!-- Q2 Milestone -->
+  <circle cx="500" cy="200" r="10" fill="#764ba2"/>
+  <text x="500" y="180" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Q2</text>
+  <text x="500" y="240" text-anchor="middle" font-size="12" fill="#666">Learn LangChain</text>
+  
+  <!-- Q3 Milestone -->
+  <circle cx="700" cy="200" r="10" fill="#764ba2"/>
+  <text x="700" y="180" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Q3</text>
+  <text x="700" y="240" text-anchor="middle" font-size="12" fill="#666">Build Projects</text>
+  
+  <!-- End point -->
+  <circle cx="900" cy="200" r="12" fill="#667eea"/>
+  <text x="900" y="180" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Q4</text>
+  <text x="900" y="240" text-anchor="middle" font-size="14" fill="#333">Goal</text>
+  <text x="900" y="260" text-anchor="middle" font-size="12" fill="#666">Software Engineer – AI Powered Engineering</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="320" width="900" height="60" fill="white" stroke="#e0e0e0" stroke-width="1" rx="8"/>
+  <text x="500" y="345" text-anchor="middle" font-size="12" fill="#666">
+    Quarterly milestones on your path from Current Role to Software Engineer – AI Powered Engineering
+  </text>
+  <text x="500" y="365" text-anchor="middle" font-size="11" fill="#999">
+    Focus on building practical skills through projects and continuous learning
+  </text>
+</svg>

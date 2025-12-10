@@ -2,7 +2,7 @@ import type { ZypherAgent } from "@corespeed/zypher";
 import { eachValueFrom } from "rxjs-for-await";
 
 /**
- * Collects ALL Zypher events including:
+ * Collects all Zypher events including:
  * - tool_output
  * - content_block
  * - final
@@ -50,7 +50,7 @@ export async function runZypherTask(
     }
 
     if (event.type === "error") {
-      console.error("   ❌ Error:", event.error || event);
+      console.error("Error:", event.error || event);
     }
   }
 
@@ -122,7 +122,7 @@ Start your response with { and end with }. Nothing else.`;
   try {
     return JSON.parse(extracted) as T;
   } catch (e) {
-    console.error(`   ❌ JSON parse failed [${label}]:`, e.message);
+    console.error(`JSON parse failed [${label}]:`, e.message);
     
     // Try one more time with more aggressive cleaning
     try {
@@ -132,7 +132,7 @@ Start your response with { and end with }. Nothing else.`;
         
       return JSON.parse(cleaned) as T;
     } catch (e2) {
-      console.error(`   ❌ Failed to parse JSON for ${label}. Using fallback.`);
+      console.error(`Failed to parse JSON for ${label}. Using fallback.`);
       return fallback;
     }
   }

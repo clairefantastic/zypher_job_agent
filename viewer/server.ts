@@ -10,6 +10,10 @@ import { scoreMatch } from "../agents/scorer.ts";
 import { writeCoverLetter } from "../agents/writer.ts";
 import { rewriteResume } from "../agents/resumeRewrite.ts";
 import { generateMarkdown } from "../markdown.ts";
+import { generateInterviewPrep } from "../agents/interview-prep.ts";
+import { getQuestionCount } from "../agents/rag-advanced.ts";
+import { generateCareerVisualizations } from "../agents/visualizer.ts";
+import { runJobAnalysisWorkflow } from "../agents/langgraph-workflow.ts";
 
 // Initialize Zypher agent once
 let agent: ZypherAgent | null = null;
@@ -56,62 +60,42 @@ async function runAnalysis(
 ) {
   const agent = await initializeAgent();
   
-  // Step 1: Scrape
-  progressCallback({ step: 1, total: 8, message: "Scraping job posting...", status: "progress" });
-  const jobRaw = await scrapeJobPosting(agent, jobUrl);
+  // Use LangGraph workflow instead of linear pipeline
+  const result = await runJobAnalysisWorkflow(
+    agent,
+    jobUrl,
+    resumeText,
+    linkedinText,
+    progressCallback
+  );
   
-  // Step 2: Parse
-  progressCallback({ step: 2, total: 8, message: "Parsing job details...", status: "progress" });
-  const jobInfo = await parseJobPosting(agent, jobRaw);
-  
-  // Step 3: Resume
-  progressCallback({ step: 3, total: 8, message: "Analyzing your resume...", status: "progress" });
-  const resumeProfile = await analyzeResume(agent, resumeText, linkedinText);
-  
-  // Step 4: Gaps
-  progressCallback({ step: 4, total: 8, message: "Computing skill gaps...", status: "progress" });
-  const gaps = await analyzeGaps(agent, jobInfo, resumeProfile);
-  
-  // Step 5: Company
-  progressCallback({ step: 5, total: 8, message: "Researching company...", status: "progress" });
-  const company = await getCompanyInsights(agent, jobUrl, jobInfo);
-  
-  // Step 6: Score
-  progressCallback({ step: 6, total: 8, message: "Scoring your match...", status: "progress" });
-  const score = await scoreMatch(agent, jobInfo, resumeProfile, company, gaps);
-  
-  // Step 7: Cover Letter
-  progressCallback({ step: 7, total: 8, message: "Writing cover letter...", status: "progress" });
-  const coverLetter = await writeCoverLetter(agent, jobInfo, resumeProfile, company, score, gaps);
-  
-  // Step 8: Resume Tips
-  progressCallback({ step: 8, total: 8, message: "Generating resume tips...", status: "progress" });
-  const rewrite = await rewriteResume(agent, jobInfo, resumeProfile, gaps, score);
-  
-  // Generate final report
+  // Generate markdown from result
   const markdown = generateMarkdown(
-    jobInfo,
-    resumeProfile,
-    gaps,
-    score,
-    coverLetter,
-    rewrite,
-    company,
+    result.jobInfo,
+    result.resumeProfile,
+    result.gaps,
+    result.score,
+    result.coverLetter,
+    result.rewrite,
+    result.company,
+    result.interviewPrep,
+    result.visualizations,
   );
   
   progressCallback({ 
-    step: 8, 
-    total: 8, 
-    message: "Analysis complete!", 
+    step: 10, 
+    total: 10, 
+    message: "Complete!", 
     status: "complete",
-    report: markdown
+    report: markdown,
+    visualizations: result.visualizations
   });
   
   return markdown;
 }
 
 // HTTP Server
-Deno.serve(async (req) => {
+Deno.serve({ port: 3000 }, async (req) => {
   const url = new URL(req.url);
 
   // API: Start Analysis
@@ -164,14 +148,35 @@ Deno.serve(async (req) => {
       });
     }
   }
+  
+  // API: RAG Status
+  if (url.pathname === "/api/rag-status" && req.method === "GET") {
+    try {
+      const count = await getQuestionCount();
+      return new Response(JSON.stringify({ 
+        ready: count > 0,
+        questionCount: count 
+      }), {
+        headers: { "content-type": "application/json" }
+      });
+    } catch (error) {
+      return new Response(JSON.stringify({ 
+        ready: false,
+        error: error.message 
+      }), {
+        status: 500,
+        headers: { "content-type": "application/json" }
+      });
+    }
+  }
 
   // Serve static files
   return serveDir(req, {
-    fsRoot: "./viewer",
+    fsRoot: ".",
     urlRoot: "",
     quiet: true,
   });
 });
 
-console.log("🚀 Server running at http://localhost:8000");
-console.log("📱 Open http://localhost:8000 in your browser");
+console.log("🚀 Server running at http://localhost:3000");
+console.log("📱 Open http://localhost:3000 in your browser");

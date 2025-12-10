@@ -12,7 +12,7 @@
 <body>
   <div class="header">
     <h1>🎯 JobFit AI Analyzer</h1>
-    <p>AI-powered job application analysis and optimization</p>
+    <p>AI-powered job application analysis with Advanced RAG & Multi-Modal Visualizations</p>
   </div>
 
   <div class="container">
@@ -25,7 +25,7 @@
         <input 
           type="url" 
           id="jobUrl" 
-          placeholder="https://jobs.ashbyhq.com/company/job-id"
+          placeholder="https://jobs.company.com/job-id"
           required
         />
       </div>
@@ -58,74 +58,90 @@
     <div class="progress-section" id="progressSection" style="display: none;">
       <h2>Analysis in Progress...</h2>
       <div class="progress-steps">
-  <div class="timeline">
-    <div class="timeline-line"></div>
+        <div class="timeline">
+          <div class="timeline-line"></div>
 
-    <div class="step" data-step="1">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">📡 Scraping job posting</div>
-        <div class="step-status">⏳</div>
-      </div>
-    </div>
+          <div class="step" data-step="1">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">📡 Scraping job posting</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
 
-    <div class="step" data-step="2">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">📋 Parsing job details</div>
-        <div class="step-status">⏳</div>
-      </div>
-    </div>
+          <div class="step" data-step="2">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">📋 Parsing job details</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
 
-    <div class="step" data-step="3">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">👤 Analyzing resume</div>
-        <div class="step-status">⏳</div>
-      </div>
-    </div>
+          <div class="step" data-step="3">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">👤 Analyzing resume</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
 
-    <div class="step" data-step="4">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">🧩 Computing gaps</div>
-        <div class="step-status">⏳</div>
-      </div>
-    </div>
+          <div class="step" data-step="4">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">🧩 Computing gaps</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
 
-    <div class="step" data-step="5">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">🏢 Getting company insights</div>
-        <div class="step-status">⏳</div>
-      </div>
-    </div>
+          <div class="step" data-step="5">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">🏢 Getting company insights</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
 
-    <div class="step" data-step="6">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">📊 Scoring match</div>
-        <div class="step-status">⏳</div>
-      </div>
-    </div>
+          <div class="step" data-step="6">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">📊 Scoring match</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
 
-    <div class="step" data-step="7">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">✉️ Writing cover letter</div>
-        <div class="step-status">⏳</div>
-      </div>
-    </div>
+          <div class="step" data-step="7">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">✉️ Writing cover letter</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
 
-    <div class="step" data-step="8">
-      <div class="bullet"></div>
-      <div class="step-content">
-        <div class="step-title">✨ Generating improvements</div>
-        <div class="step-status">⏳</div>
+          <div class="step" data-step="8">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">✨ Generating improvements</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
+
+          <div class="step" data-step="9">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">🎯 Interview prep (RAG)</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
+
+          <div class="step" data-step="10">
+            <div class="bullet"></div>
+            <div class="step-content">
+              <div class="step-title">🎨 Career visualizations</div>
+              <div class="step-status">⏳ Pending</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
       <div class="progress-bar">
         <div class="progress-fill" id="progressFill"></div>
@@ -139,6 +155,24 @@
         <h2>Analysis Complete! ✅</h2>
         <button id="newAnalysisBtn" class="btn-secondary">Start New Analysis</button>
       </div>
+
+      <!-- Visualizations Section -->
+      <div id="visualizationsSection" class="visualizations-section" style="display: none;">
+        <h3>🎨 Career Path Visualizations</h3>
+        
+        <div class="viz-grid">
+          <div class="viz-card">
+            <h4>📊 Skills Gap Analysis</h4>
+            <div id="radarContainer" class="viz-container"></div>
+          </div>
+          
+          <div class="viz-card">
+            <h4>🗓️ Career Development Timeline</h4>
+            <div id="timelineContainer" class="viz-container"></div>
+          </div>
+        </div>
+      </div>
+
       <div id="reportContent" class="markdown-body"></div>
       <div class="download-section">
         <button id="downloadBtn" class="btn-primary">📥 Download Report</button>

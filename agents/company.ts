@@ -15,7 +15,7 @@ export async function getCompanyInsights(
   let companyDomain = "";
   try {
     const url = new URL(jobUrl);
-    // Extract base domain (e.g., softlight from jobs.ashbyhq.com/softlight/...)
+    // Extract base domain 
     const pathParts = url.pathname.split('/').filter(p => p);
     if (pathParts.length > 0) {
       companyDomain = pathParts[0];
@@ -31,7 +31,7 @@ export async function getCompanyInsights(
     `https://${companyDomain}.io`,
   ];
 
-  console.log(`   🌐 Attempting to scrape: ${possibleUrls[0]}`);
+  console.log(`Attempting to scrape: ${possibleUrls[0]}`);
 
   // Step 2: Scrape the company homepage
   const scrapePrompt = `
@@ -65,9 +65,9 @@ DO NOT ask questions.
       // Already plain text
     }
     
-    console.log(`   ✓ Scraped ${companyPageContent.length} chars from company site`);
+    console.log(`Scraped ${companyPageContent.length} chars from company site`);
   } catch (e) {
-    console.log(`   ⚠️  Could not scrape company site:`, e.message);
+    console.log(`Could not scrape company site:`, e.message);
     companyPageContent = `Company: ${job.company}\nNo additional information available.`;
   }
 

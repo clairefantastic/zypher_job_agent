@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Skills Radar Chart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 30px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Skills Gap Analysis</h1>
+        <canvas id="radarChart" width="600" height="600"></canvas>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(102, 126, 234, 0.5);"></div>
+                <span>Your Skills</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(255, 99, 132, 0.5);"></div>
+                <span>Required Skills</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('radarChart');
+        const ctx = canvas.getContext('2d');
+        const centerX = 300;
+        const centerY = 300;
+        const maxRadius = 250;
+        
+        const skills = [{"skill":"BS+ in Computer Science (or related) with strong fundamentals (algorithms, data structures, systems)","current":20,"required":100},{"skill":"Proficiency in a high-level programming language (Java or Python preferred)","current":85,"required":100},{"skill":"Experience contributing to developer-facing or production systems","current":20,"required":100},{"skill":"Curiosity and eagerness to learn about AI/LLM application patterns","current":20,"required":100},{"skill":"Strong communication skills; comfortable working with engineers in a fast, collaborative environment","current":20,"required":100}];
+        
+        // Draw radar background
+        function drawRadarBackground() {
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            
+            // Concentric circles
+            for (let i = 1; i <= 5; i++) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, maxRadius * i / 5, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            
+            // Radial lines and labels
+            const angleStep = (2 * Math.PI) / skills.length;
+            skills.forEach((skill, i) => {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + maxRadius * Math.cos(angle);
+                const y = centerY + maxRadius * Math.sin(angle);
+                
+                // Line
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                
+                // Label
+                const labelX = centerX + (maxRadius + 30) * Math.cos(angle);
+                const labelY = centerY + (maxRadius + 30) * Math.sin(angle);
+                ctx.fillStyle = '#333';
+                ctx.font = '14px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(skill.skill, labelX, labelY);
+            });
+        }
+        
+        // Draw skill polygon
+        function drawSkillPolygon(scores, color) {
+            const angleStep = (2 * Math.PI) / skills.length;
+            
+            ctx.fillStyle = color;
+            ctx.strokeStyle = color.replace('0.2', '0.8');
+            ctx.lineWidth = 2;
+            
+            ctx.beginPath();
+            scores.forEach((score, i) => {
+                const angle = i * angleStep - Math.PI / 2;
+                const radius = maxRadius * score / 100;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+        
+        // Render
+        drawRadarBackground();
+        drawSkillPolygon(skills.map(s => s.required), 'rgba(255, 99, 132, 0.2)');
+        drawSkillPolygon(skills.map(s => s.current), 'rgba(102, 126, 234, 0.2)');
+    </script>
+</body>
+</html>

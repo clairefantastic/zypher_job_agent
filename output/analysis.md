@@ -1,26 +1,24 @@
 # Job Application Analysis
 
-**Position:** Founding Frontend Engineer
-**Company:** Softlight
-**Location:** New York City
+**Position:** Software Engineer – AI Powered Engineering
+**Company:** IMC
+**Location:** Chicago
 
 ---
 
 ## COMPANY INSIGHTS
 
-**Industry:** AI/Product Development Tools
-**Size:** Early stage
+**Industry:** Not specified
+**Size:** Not specified
 
-### About Softlight
-Softlight creates product and design agents that help you discover what to build. The company learns your business, discovers product ideas, and designs them in ways you might not have thought of, built for PMs, designers, and engineers.
+### About IMC
+No information available
 
 ### Company Culture
-Building a team that knows what the best products look like, with team members who created products at companies like Meta and Uber. They're hiring in NYC and emphasize moving fast and making better decisions.
+No information available
 
 
 
-### Recent News
-- Raised $3.2M from investors including product execs, CEOs, and founders at companies like Stripe, Airbnb, and Plaid
 
 
 ---
@@ -28,53 +26,80 @@ Building a team that knows what the best products look like, with team members w
 ## MISSING KEYWORDS
 
 ### ✅ Your Strengths (What You Have)
-- Strong frontend technical abilities with React and TypeScript
-- Team leadership experience
-- Performance optimization skills
-- 3 years of professional development experience
+- BS in Computer Science from UC Berkeley
+- Python proficiency
+- Production systems experience
+- Strong software engineering fundamentals
+- Team collaboration and mentoring experience
+- Code review experience
+- Performance optimization experience
+- Testing and CI/CD experience
+- Microservices architecture
+- 5+ years software engineering experience
 
 
 ### Technical Skills Not on Resume:
-- AI/ML model integration
-- Interface design tools
-- Pixel-perfect design implementation
+- Java
+- LangChain
+- LangGraph
+- AutoGen
+- MCP servers
+- AI/LLM frameworks
+- Machine learning tools
+- Vector search
+- Embeddings
+- Static analysis tools
+- Compiler tools
+- Model serving infrastructure
+- AI evaluation frameworks
 
 ### Experience Gaps:
-- Startup/founding team experience
-- Product strategy and roadmap definition
-- Direct user interaction and feedback loops
-- AI agent development
-- Product and design process experience
+- AI/ML application development
+- Agentic AI systems
+- LLM integration
+- AI code generation workflows
+- Retrieval systems development
+- AI model fine-tuning
+- AI evaluation pipelines
+- Production AI systems
 
 ### Cloud/Infrastructure:
 - None identified
 
 ### Frameworks/Tools:
-- None identified
+- LangChain
+- LangGraph
+- AutoGen
 
 ### Certifications:
 - None identified
 
 ### 💡 Addressable Gaps (Can Highlight in Interview)
-- Product and design process interest
-- Startup ambiguity comfort
-- Ownership mentality
-- Cross-functional collaboration
+- Emphasize Python experience and willingness to learn Java
+- Highlight experience with complex systems and microservices
+- Mention any personal projects with AI/ML tools
+- Emphasize curiosity and learning ability
+- Connect performance optimization work to AI evaluation pipelines
+- Frame testing experience as relevant to AI code validation
 
 
 ### ⚠️ Critical Gaps
-- AI/ML experience for agent development
-- Founding team/startup experience
-- Product strategy experience
-- Interface design expertise
+- No demonstrated AI/ML experience
+- Missing key AI frameworks (LangChain, LangGraph, AutoGen)
+- No experience with MCP servers or agentic AI
+- Lack of Java experience (preferred language)
+- No retrieval systems or vector search background
 
 
 ### 📋 Recommendations
-- Emphasize your team leadership and performance optimization achievements
-- Highlight any experience with user-facing product development
-- Demonstrate comfort with ambiguity through examples from your e-commerce work
-- Research Softlight's AI agents and express genuine interest in the product-design intersection
-- Prepare examples showing ownership mentality and going beyond job responsibilities
+- Take online courses in LangChain, LangGraph, or similar AI frameworks
+- Build a personal project using Python AI tools to demonstrate interest
+- Learn Java basics to meet preferred language requirement
+- Study retrieval systems, vector databases, and embeddings
+- Research MCP (Model Context Protocol) and agentic AI concepts
+- Emphasize your strong engineering fundamentals and ability to learn quickly
+- Highlight performance optimization and testing skills as transferable to AI systems
+- Consider mentioning any exposure to AI tools in your current work
 
 
 ---
@@ -82,44 +107,50 @@ Building a team that knows what the best products look like, with team members w
 ## REQUIRED SKILLS
 
 ### Must Have:
-- Have strong technical abilities
-- Are comfortable with ambiguity
-- Are excited about the product and design process
-- Care about working on things that are not your job
+- BS+ in Computer Science (or related) with strong fundamentals (algorithms, data structures, systems)
+- Proficiency in a high-level programming language (Java or Python preferred)
+- Experience contributing to developer-facing or production systems
+- Curiosity and eagerness to learn about AI/LLM application patterns
+- Strong communication skills; comfortable working with engineers in a fast, collaborative environment
 
 ### Nice to Have:
 - Not specified
 
 ### Tech Stack:
-- Not specified
+- Java
+- Python
+- LangChain
+- LangGraph
+- AutoGen
+- MCP servers
 
 ---
 
 ## DRAFT COVER LETTER
 
-Dear Softlight Team,
+Dear IMC Hiring Team,
 
-I'm excited to apply for the Founding Frontend Engineer position at Softlight. Your mission to create AI agents that help teams discover what to build resonates deeply with me—having spent three years building user-facing products, I understand how challenging it is to navigate from initial ideas to great products. Your recent $3.2M raise and backing from product leaders at companies like Stripe and Airbnb signals you're building something transformative, and I want to contribute to that vision.
+I am writing to express my strong interest in the Software Engineer – AI Powered Engineering position at IMC. Your mission to embed agentic AI directly into production-critical developer workflows represents exactly the kind of transformative engineering challenge I'm passionate about tackling. As a Senior Software Engineer with 5+ years of experience building scalable production systems and a Computer Science degree from UC Berkeley, I'm excited to bring my technical foundation and proven track record to help make AI-generated code reliable, auditable, and fast to ship.
 
-As a Senior Frontend Engineer, I've developed the technical foundation you need: deep expertise in React and TypeScript, plus experience with modern tools like Node.js and Tailwind CSS. Most importantly, I've led a team of 4 developers while optimizing React performance that improved load times by 40%—demonstrating both the technical abilities and ownership mentality you're seeking. My experience building e-commerce dashboards has taught me to balance user needs with technical constraints, skills directly applicable to ensuring your AI agents execute interface design work at the pixel level.
+In my current role at TechStart Inc., I've architected and led the development of microservices-based systems serving 50,000+ daily active users, directly relevant to building the large-scale AI infrastructure described in your role. My experience optimizing API performance by 40% through systematic testing and evaluation pipelines closely mirrors the compile/test/evaluate workflows needed for AI-generated code validation. Additionally, my proficiency in Python positions me well to contribute immediately to your tech stack, while my extensive experience with performance-sensitive code paths, telemetry, and configuration hygiene aligns perfectly with IMC's best practices for ensuring reliable AI outputs. I've also mentored junior engineers and conducted code reviews, skills that will be valuable when collaborating with your experienced engineering teams on AI-driven experiments.
 
-What excites me most about this role is the opportunity to grow into areas I'm passionate about but haven't yet explored professionally—particularly the intersection of AI and product design. While my background is in traditional frontend development rather than AI agents, I thrive in ambiguous environments where I can learn rapidly and take on responsibilities beyond my formal job description. Having worked in fast-paced product environments, I understand the importance of moving quickly while making thoughtful decisions, and I'm energized by the prospect of working directly with founders to define both product strategy and company culture.
+While I'm new to specialized AI frameworks like LangChain and AutoGen, I'm genuinely excited about this learning opportunity and have already begun exploring these technologies. My strong computer science fundamentals in algorithms and data structures, combined with my experience building complex production systems, provide an excellent foundation for quickly mastering AI/LLM application patterns. I'm particularly drawn to IMC's pragmatic approach to AI integration and believe my curiosity, proven ability to rapidly acquire new technologies, and systematic approach to performance optimization make me well-suited to help evaluate and improve AI-driven workflows. I'm also eager to expand my language skills to include Java alongside my Python expertise.
 
-I'd love to discuss how my technical skills and leadership experience can contribute to Softlight's mission of changing how products are created. Thank you for considering my application—I look forward to hearing from you.
+I would welcome the opportunity to discuss how my production systems experience, performance optimization skills, and enthusiasm for AI engineering can contribute to IMC's mission of revolutionizing developer workflows with reliable AI integration. Thank you for considering my application, and I look forward to hearing from you.
 
-Best regards,
-Alex C.
+Sincerely,
+Alex Johnson
 
 
 ### Key Selling Points
-- Strong technical foundation in React, TypeScript, and modern frontend stack aligns with core requirements
-- Proven leadership experience managing 4 developers and achieving 40% performance improvements demonstrates ownership and technical impact
-- Enthusiasm for learning AI/product design intersection shows growth mindset and alignment with company mission
-- Experience in fast-paced product environments translates to startup culture and ambiguity comfort
-- Direct connection between e-commerce dashboard work and pixel-level interface design challenges
+- Strong technical foundation with CS degree from UC Berkeley and 5+ years building scalable production systems serving 50K+ users
+- Proven Python proficiency and performance optimization skills (40% API improvement) directly applicable to AI evaluation pipelines
+- Extensive experience with microservices, testing frameworks, and code review processes relevant to AI code validation
+- Demonstrated ability to learn new technologies quickly, with genuine enthusiasm for mastering AI frameworks and Java
+- Team collaboration and mentoring experience that aligns with IMC's collaborative engineering environment
 
 
-*Tone: Professional and enthusiastic with authentic excitement for learning*
+*Tone: Professional and enthusiastic with authentic acknowledgment of learning opportunities*
 
 
 ---
@@ -127,86 +158,265 @@ Alex C.
 ## RESUME OPTIMIZATION
 
 ### Strategic Suggestions
-- Reframe your summary to emphasize product ownership and user-focused development rather than just technical dashboards
-- Add a 'Key Projects' section highlighting pixel-perfect interface work and any cross-functional collaboration
-- Expand technical skills to include design-adjacent tools and emphasize performance optimization as product impact
-- Restructure experience bullets to lead with ownership mentality and product strategy contributions
-- Add metrics around user impact, product decisions, and team growth to demonstrate founding-level responsibilities
+- Update summary to emphasize Python expertise, production systems experience, and interest in AI/ML engineering rather than full-stack web development
+- Add a 'Technical Projects' section showcasing any AI/ML experimentation, automation tools, or developer-facing utilities you've built
+- Reframe testing and performance optimization experience as directly relevant to AI code evaluation and validation pipelines
+- Emphasize algorithms, data structures, and systems knowledge from your CS education to show strong fundamentals for AI work
+- Highlight collaboration and mentoring experience more prominently to align with the team-focused, experimental nature of the role
 
 
 ### Keywords to Add (ATS Optimization)
-- ownership mentality
-- product design process
-- pixel-level
-- interface design
-- technical decisions
-- product roadmap
-- ambiguity
-- user experience
-- cross-functional collaboration
-- founding team
-- product strategy
+- production-critical systems
+- developer-facing
+- evaluation pipelines
+- static analysis
+- performance gates
+- telemetry
+- configuration management
+- systematic analysis
+- collaborative development
+- algorithms
+- data structures
+- automation
+- monitoring
+- quality gates
+- best practices
+- performance-sensitive code paths
 
 
 ### Sections to Emphasize
-- Technical skills section - expand with design-related tools and methodologies
-- Experience achievements - focus on product ownership and team building
-- Add new 'Product Impact' or 'Key Projects' section showcasing user-facing work
-- Leadership experience - emphasize culture building and hiring
+- Python experience and Django framework usage
+- Performance optimization and systematic analysis work
+- Testing frameworks and quality assurance experience
+- Production systems and scalability achievements
+- Team collaboration and mentoring experience
+- CS education with strong fundamentals in algorithms and data structures
 
 
 ### Bullet Point Improvements
 
-**Summary**
+**Experience - Senior Software Engineer at TechStart Inc.**
 
 ❌ Before:
-> Senior Frontend Engineer with 3 years of experience building e-commerce dashboards
+> Led development of customer-facing dashboard serving 50K+ daily active users
 
 ✅ After:
-> Senior Frontend Engineer with 3 years of experience building user-facing products, leading cross-functional teams, and driving product decisions through technical ownership
+> Led development of production-critical dashboard serving 50K+ daily active users, architecting scalable systems with performance monitoring and telemetry
 
-💡 Why: Emphasizes product ownership and cross-functional collaboration which are key founding team requirements
+💡 Why: Emphasizes production-critical systems and telemetry, which are key requirements for the AI engineering role.
 
-**Experience - Senior Frontend Engineer**
+**Experience - Senior Software Engineer at TechStart Inc.**
 
 ❌ Before:
-> Building e-commerce dashboards
+> Architected microservices backend using Node.js and Express
 
 ✅ After:
-> Built and owned end-to-end product development of complex e-commerce dashboards, making technical decisions that directly impacted user experience and business metrics
+> Architected microservices backend using Python (Django) and Node.js, implementing automated deployment pipelines and configuration management
 
-💡 Why: Highlights ownership mentality and product impact alignment with founding engineer responsibilities
+💡 Why: Highlights Python experience and configuration management, both critical for the AI role.
 
-**Experience - Senior Frontend Engineer**
+**Experience - Senior Software Engineer at TechStart Inc.**
 
 ❌ Before:
-> Leading development team
+> Improved API response time by 40%
 
 ✅ After:
-> Led and grew development team of 4 engineers, implementing agile processes and technical standards while fostering collaborative culture
+> Improved API response time by 40% through systematic performance analysis, automated testing pipelines, and code optimization techniques
 
-💡 Why: Demonstrates team building and culture creation skills essential for founding team roles
+💡 Why: Connects performance optimization to evaluation pipelines and systematic analysis, relevant to AI code validation.
 
-**Achievements**
+**Experience - Senior Software Engineer at TechStart Inc.**
 
 ❌ Before:
-> Led a team of 4 developers
+> Mentored 3 junior engineers and conducted code reviews
 
 ✅ After:
-> Led and mentored team of 4 developers through ambiguous product requirements, defining technical roadmap and hiring processes
+> Mentored 3 junior engineers and conducted code reviews, establishing best practices for code quality, testing standards, and collaborative development workflows
 
-💡 Why: Shows comfort with ambiguity and roadmap definition which are explicitly required skills
+💡 Why: Emphasizes best practices and collaborative workflows, which are essential for the AI team environment.
 
-**Achievements**
+**Experience - Software Engineer at Digital Solutions Co.**
 
 ❌ Before:
-> Optimized React performance improving load times by 40%
+> Wrote comprehensive unit and integration tests (Jest, Cypress)
 
 ✅ After:
-> Architected pixel-perfect interface optimizations that improved React performance by 40%, directly enhancing user experience and product adoption
+> Built comprehensive testing and evaluation frameworks using Jest and Cypress, implementing automated quality gates and static analysis checks
 
-💡 Why: Incorporates 'pixel-perfect interface' keyword and connects technical work to product outcomes
+💡 Why: Reframes testing experience as evaluation frameworks and quality gates, directly relevant to AI code validation.
 
+**Experience - Software Engineer at Digital Solutions Co.**
+
+❌ Before:
+> Optimized database queries
+
+✅ After:
+> Optimized database queries and implemented caching strategies, improving system performance through systematic analysis and monitoring
+
+💡 Why: Emphasizes systematic analysis and performance-sensitive code paths mentioned in the job requirements.
+
+**Experience - Software Engineer at Digital Solutions Co.**
+
+❌ Before:
+> Participated in on-call rotation and resolved production incidents
+
+✅ After:
+> Participated in on-call rotation for production systems, implementing monitoring solutions and automated incident response workflows
+
+💡 Why: Highlights production systems experience and automation, relevant to maintaining reliable AI systems.
+
+
+
+---
+
+## INTERVIEW PREPARATION
+
+
+*Retrieved using hybrid-rrfusion - 15 questions analyzed, avg relevance: 7.5%*
+
+
+### 🎯 Top Interview Questions
+
+
+**1. Describe a time you had to learn a new technology quickly**
+
+*Category:* behavioral  
+*Why likely:* This role requires learning AI/ML frameworks like LangChain and AutoGen quickly, which the candidate lacks. The interviewer will assess learning agility since the candidate needs to bridge from web development to AI engineering.
+
+**💡 Suggested Answer Template:**
+SITUATION: When I joined TechStart Inc., they needed real-time features implemented quickly using WebSockets and Redis pub/sub, technologies I hadn't used in production before. TASK: I had to learn these technologies and implement the solution within a tight 2-week sprint. ACTION: I dedicated evenings to studying documentation, built small proof-of-concepts, and paired with senior engineers for guidance. I also set up monitoring to track performance. RESULT: Successfully implemented real-time features that now serve 50K+ daily users with excellent performance.
+
+**📌 Use These Examples from Your Resume:**
+- Implemented real-time features using WebSockets and Redis pub/sub
+- Improved API response time by 40%
+- Built responsive web applications using React and TypeScript
+
+---
+
+
+**2. Tell me about a time you improved an existing system**
+
+*Category:* behavioral  
+*Why likely:* The role involves improving AI-generated code through evaluation loops and performance optimization. The candidate's experience optimizing systems directly aligns with making AI outputs more reliable and efficient.
+
+**💡 Suggested Answer Template:**
+SITUATION: At TechStart Inc., our customer dashboard was experiencing slow API response times affecting 50K+ daily users. TASK: I needed to identify bottlenecks and improve performance without disrupting the live system. ACTION: I analyzed the microservices architecture, implemented caching strategies, optimized database queries, and added performance monitoring. I worked with the team to deploy changes incrementally. RESULT: Improved API response time by 40% and established ongoing performance monitoring practices that the team still uses today.
+
+**📌 Use These Examples from Your Resume:**
+- Improved API response time by 40%
+- Architected microservices backend using Node.js and Express
+- Optimized database queries, reducing load time by 35%
+
+---
+
+
+**3. How do you ensure code quality in a large codebase?**
+
+*Category:* technical  
+*Why likely:* The role involves maintaining code quality for AI-generated code across large codebases with evaluation loops and static analysis. The candidate's testing and code review experience is directly relevant to this responsibility.
+
+**💡 Suggested Answer Template:**
+At TechStart Inc., I established several practices for our growing codebase: First, I implemented comprehensive testing strategies using Jest and Cypress for unit and integration tests. Second, I instituted mandatory code reviews and mentored 3 junior engineers on best practices. Third, I set up CI/CD pipelines with automated testing and deployment gates. Fourth, I used static analysis tools and consistent linting rules. Finally, I established documentation standards and regular refactoring sessions to manage technical debt.
+
+**📌 Use These Examples from Your Resume:**
+- Wrote comprehensive unit and integration tests (Jest, Cypress)
+- Mentored 3 junior engineers and conducted code reviews
+- Architected microservices backend using Node.js and Express
+
+---
+
+
+**4. Tell me about a time you collaborated with multiple teams to deliver a complex project**
+
+*Category:* behavioral  
+*Why likely:* The role requires working closely with experienced engineers and platform teams. The candidate's experience collaborating across teams while mentoring others demonstrates the collaborative skills needed for this AI engineering role.
+
+**💡 Suggested Answer Template:**
+SITUATION: At TechStart Inc., I was tasked with leading the development of a new customer-facing dashboard that required coordination between engineering, product, and design teams. TASK: I needed to deliver a scalable solution serving 50K+ users while ensuring all teams stayed aligned on requirements and timelines. ACTION: I organized weekly cross-functional meetings, created technical specifications that non-technical teams could understand, mentored junior engineers, and implemented agile methodologies to maintain visibility. I also established code review processes to maintain quality. RESULT: Successfully launched the dashboard on schedule, now serving 50K+ daily users, and the collaborative processes we established became the standard for future projects.
+
+**📌 Use These Examples from Your Resume:**
+- Led development of customer-facing dashboard serving 50K+ daily active users
+- Mentored 3 junior engineers and conducted code reviews
+- Collaborated with product and design teams using agile methodologies
+
+---
+
+
+**5. How would you approach debugging a performance issue in a production system?**
+
+*Category:* technical  
+*Why likely:* The role involves ensuring AI outputs are reliable in production-critical systems. The candidate's experience with performance optimization and production incident resolution directly relates to maintaining AI system reliability.
+
+**💡 Suggested Answer Template:**
+I follow a systematic approach: First, I gather metrics and logs to understand the scope and impact - is it affecting all users or specific segments? Second, I use monitoring tools and profiling to identify bottlenecks, similar to how I improved API response time by 40% at TechStart. Third, I reproduce the issue in a staging environment when possible. Fourth, I implement targeted fixes with proper testing, drawing from my experience with comprehensive unit and integration tests. Finally, I implement monitoring and alerting to prevent recurrence, as I did during my on-call rotation at Digital Solutions Co.
+
+**📌 Use These Examples from Your Resume:**
+- Improved API response time by 40%
+- Participated in on-call rotation and resolved production incidents
+- Wrote comprehensive unit and integration tests (Jest, Cypress)
+
+---
+
+
+### 🌟 What to Emphasize
+- Highlight your strong Python experience with Django framework to align with their preferred languages (Python/Java)
+- Emphasize your systematic approach to performance optimization and testing as directly applicable to AI evaluation pipelines
+- Showcase your mentoring and collaborative experience as evidence of ability to work with experienced AI engineers
+- Frame your CS fundamentals from UC Berkeley as providing the algorithmic foundation needed for AI engineering work
+
+### 📚 Preparation Tips
+- Research MCP (Model Context Protocol) and agentic AI concepts to show genuine interest and preparation for the role transition
+- Prepare specific examples of how your testing frameworks and performance optimization work relates to AI code validation and evaluation
+- Practice explaining complex technical concepts clearly, as you'll be working with both AI specialists and platform teams
+- Prepare thoughtful questions about their AI integration challenges and how they measure AI code quality and reliability
+
+*Questions retrieved from knowledge base using RAG with hybrid search*
+
+
+---
+
+## 🎨 CAREER PATH VISUALIZATION
+
+
+### Career Roadmap
+
+```mermaid
+graph TB
+    A[Current: Full Stack Engineer]
+    B[Learn Java Fundamentals]
+    C[Explore AI Frameworks]
+    D[Build AI Projects]
+    E[Target: AI Engineering Role]
+    A --> B
+    A --> C
+    B --> D
+    C --> D
+    D --> E
+```
+
+### Interactive Visualizations
+
+The following interactive visualizations have been generated:
+
+- **Skills Radar Chart**: `./output/visualizations/skills-radar.html`
+  - Open in your browser to see an interactive comparison of your skills vs. job requirements
+  
+- **Career Timeline SVG**: `./output/visualizations/timeline.svg`
+  - Visual timeline showing your path to the target role over 12 months
+
+📂 All visualizations saved to: `./output/visualizations/`
+
+**How to view:**
+```bash
+# Skills radar (interactive)
+open ./output/visualizations/skills-radar.html
+
+# Timeline
+open ./output/visualizations/timeline.svg
+
+# Roadmap (paste into https://mermaid.live)
+cat ./output/visualizations/roadmap.mmd
+```
 
 
 ---
@@ -214,37 +424,37 @@ Alex C.
 ## JOB DETAILS
 
 ### Summary
-As a founding member, you'll work closely with our founders and early team members to build the product, the company, and the culture. We're early and run lean, so we expect you to bring an ownership mentality.
+IMC is embedding agentic AI directly into the developer workflow for our production-critical systems. As a member of the Agentic AI engineering team, you'll help build agents, MCP servers, and evaluation loops that make AI-generated code reliable, auditable, and fast to ship. You'll work closely with experienced engineers and platform teams to deliver pragmatic, high-impact AI integrations at scale.
 
 ### Key Responsibilities
-- Ensuring our AI agents can successfully execute on interface design work down to the pixel level
-- Owning and building product, that you'll ship directly to our users
-- Working closely with users to understand their problems and drive fixes fast
-- Working closely with our founders and early team members to define the roadmap and strategy
-- Making technical decisions about the models we use and how to best leverage them to do product and design work
-- Growing the team to find people you'd be proud to work with
+- Contribute to the platform by implementing agents, MCP servers, and supporting services that propose and apply changes to large codebases
+- Assist in developing retrieval systems that give AI agents and developers accurate, up-to-date context from large codebases and design artifacts
+- Help measure and improve AI-generated changes by building compile/test/evaluate pipelines (static analysis, style and safety checks, performance gates, code review)
+- Apply IMC's best practices in concurrency, telemetry, configuration hygiene, and performance-sensitive code paths to ensure AI outputs are reliable and idiomatic
+- Collaborate with teammates on experiments to evaluate and improve AI-driven workflows
 
 ### Qualifications
-- Not specified
+- BS+ in Computer Science (or related) with strong fundamentals
 
 ---
 
 ## YOUR PROFILE
 
-**Name:** Alex C.
-**Total Experience:** 3 years
+**Name:** Alex Johnson
+**Total Experience:** 5+ years
 
 ### Professional Summary
-Senior Frontend Engineer with 3 years of experience building e-commerce dashboards
+Passionate Full Stack Software Engineer with 5+ years of experience building scalable web applications. Expertise in JavaScript/TypeScript, React, Node.js, and cloud platforms.
 
 
 ### Technical Skills
-React, TypeScript, Deno, Node.js, Tailwind CSS
+JavaScript, TypeScript, Python, SQL, HTML/CSS, React, Next.js, Vue.js, Redux, Tailwind CSS, Node.js, Express, Django, REST APIs, GraphQL
 
 ### Recent Experience
-**Senior Frontend Engineer** at  (3 years)
+**Senior Software Engineer** at TechStart Inc. (June 2021 - Present)
+**Software Engineer** at Digital Solutions Co. (January 2019 - May 2021)
 
 
 ---
 
-*Generated on 11/23/2025, 9:44:06 PM*
+*Generated on 12/9/2025, 3:59:37 PM*

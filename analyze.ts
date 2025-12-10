@@ -8,6 +8,9 @@ import { writeCoverLetter } from "./agents/writer.ts";
 import { getCompanyInsights } from "./agents/company.ts";
 import { rewriteResume } from "./agents/resumeRewrite.ts";
 import { scoreMatch } from "./agents/scorer.ts";
+import { generateInterviewPrep } from "./agents/interview-prep.ts";
+import { getQuestionCount } from "./agents/rag-advanced.ts";
+import { generateCareerVisualizations } from "./agents/visualizer.ts";
 
 const jobUrl = Deno.args[0];
 if (!jobUrl) {
@@ -49,29 +52,79 @@ try {
 }
 
 // Run pipeline
-console.log("📋 [1/8] Scraping job posting...");
+console.log("📋 [1/10] Scraping job posting...");
 const jobRaw = await scrapeJobPosting(agent, jobUrl);
 
-console.log("📋 [2/8] Parsing job details...");
+console.log("📋 [2/10] Parsing job details...");
 const jobInfo = await parseJobPosting(agent, jobRaw);
 
-console.log("📋 [3/8] Analyzing resume...");
+console.log("📋 [3/10] Analyzing resume...");
 const resumeProfile = await analyzeResume(agent, resumeText, "");
 
-console.log("📋 [4/8] Computing gaps...");
+console.log("📋 [4/10] Computing gaps...");
 const gaps = await analyzeGaps(agent, jobInfo, resumeProfile);
 
-console.log("📋 [5/8] Getting company insights...");
+console.log("📋 [5/10] Getting company insights...");
 const company = await getCompanyInsights(agent, jobUrl, jobInfo);
 
-console.log("📋 [6/8] Scoring match...");
+console.log("📋 [6/10] Scoring match...");
 const score = await scoreMatch(agent, jobInfo, resumeProfile, company, gaps);
 
-console.log("📋 [7/8] Writing cover letter...");
+console.log("📋 [7/10] Writing cover letter...");
 const coverLetter = await writeCoverLetter(agent, jobInfo, resumeProfile, company, score, gaps);
 
-console.log("📋 [8/8] Generating resume improvements...");
+console.log("📋 [8/10] Generating resume improvements...");
 const rewrite = await rewriteResume(agent, jobInfo, resumeProfile, gaps, score);
+
+console.log("📋 [9/10] Preparing interview questions...");
+let interviewPrep = null;
+try {
+  const ragCount = await getQuestionCount();
+  if (ragCount > 0) {
+    interviewPrep = await generateInterviewPrep(
+      agent,
+      jobInfo,
+      resumeText,
+      jobInfo.company || "Company"
+    );
+    console.log(`✅ Generated ${interviewPrep.questions.length} interview questions`);
+    if (interviewPrep.rag_stats) {
+      console.log(`   RAG Stats: ${interviewPrep.rag_stats.total_retrieved} retrieved, avg relevance: ${(interviewPrep.rag_stats.avg_relevance * 100).toFixed(1)}%`);
+    }
+  } else {
+    console.log("⚠️ RAG database is empty. Run: deno run -A --env agents/seed-questions.ts");
+  }
+} catch (error) {
+  console.error("⚠️ Interview prep failed:", error.message);
+}
+
+console.log("📋 [10/10] Generating career visualizations...");
+let visualizations = null;
+try {
+  visualizations = await generateCareerVisualizations(
+    agent,
+    resumeProfile,
+    jobInfo,
+    gaps
+  );
+  
+  // Save visualizations to separate files
+  await Deno.mkdir("./output/visualizations", { recursive: true });
+  
+  await Deno.writeTextFile(
+    "./output/visualizations/skills-radar.html",
+    visualizations.skills_radar_html
+  );
+  
+  await Deno.writeTextFile(
+    "./output/visualizations/timeline.svg",
+    visualizations.timeline_svg
+  );
+  
+  console.log("✅ Visualizations saved to ./output/visualizations/");
+} catch (error) {
+  console.error("⚠️ Visualization generation failed:", error.message);
+}
 
 // Generate readable output
 console.log("\n📝 Generating report...\n");
@@ -163,6 +216,75 @@ ${rewrite.bullet_improvements && rewrite.bullet_improvements.length > 0 ? `### B
 
 ---
 
+## INTERVIEW PREPARATION
+
+${interviewPrep ? `
+${interviewPrep.rag_stats ? `*Retrieved using ${interviewPrep.rag_stats.retrieval_method} - ${interviewPrep.rag_stats.total_retrieved} questions analyzed, avg relevance: ${(interviewPrep.rag_stats.avg_relevance * 100).toFixed(1)}%*\n` : ''}
+
+### 🎯 Top Interview Questions
+
+${interviewPrep.questions.map((q, i) => `
+**${i + 1}. ${q.question}**
+
+*Category:* ${q.category}  
+*Why likely:* ${q.why_likely}
+
+**💡 Suggested Answer Template:**
+${q.answer_template}
+
+**📌 Use These Examples from Your Resume:**
+${q.resume_examples.map(ex => `- ${ex}`).join('\n')}
+
+---
+`).join('\n')}
+
+### 🌟 What to Emphasize
+${interviewPrep.emphasis_points.map(p => `- ${p}`).join('\n')}
+
+### 📚 Preparation Tips
+${interviewPrep.preparation_tips.map(t => `- ${t}`).join('\n')}
+
+*Questions retrieved from knowledge base using RAG with hybrid search*
+` : '⚠️ Interview prep not available (RAG database not initialized)'}
+
+---
+
+## 🎨 CAREER PATH VISUALIZATION
+
+${visualizations ? `
+### Career Roadmap
+
+\`\`\`mermaid
+${visualizations.mermaid_diagram}
+\`\`\`
+
+### Interactive Visualizations
+
+The following interactive visualizations have been generated:
+
+- **Skills Radar Chart**: \`./output/visualizations/skills-radar.html\`
+  - Open in your browser to see an interactive comparison of your skills vs. job requirements
+  
+- **Career Timeline SVG**: \`./output/visualizations/timeline.svg\`
+  - Visual timeline showing your path to the target role over 12 months
+
+📂 All visualizations saved to: \`./output/visualizations/\`
+
+**How to view:**
+\`\`\`bash
+# Skills radar (interactive)
+open ./output/visualizations/skills-radar.html
+
+# Timeline
+open ./output/visualizations/timeline.svg
+
+# Roadmap (paste into https://mermaid.live)
+cat ./output/visualizations/roadmap.mmd
+\`\`\`
+` : '⚠️ Visualizations not available'}
+
+---
+
 ## JOB DETAILS
 
 ### Summary
@@ -199,6 +321,12 @@ await Deno.writeTextFile("./output/analysis.md", output);
 
 console.log("✅ DONE!\n");
 console.log("📄 Saved to: ./output/analysis.md");
+if (visualizations) {
+  console.log("🎨 Visualizations: ./output/visualizations/");
+}
 console.log("\nView with:");
 console.log("  cat ./output/analysis.md");
 console.log("  code ./output/analysis.md");
+if (visualizations) {
+  console.log("  open ./output/visualizations/skills-radar.html");
+}

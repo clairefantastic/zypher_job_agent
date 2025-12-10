@@ -38,44 +38,44 @@ export function createJobAnalysisWorkflow(
   
   // Node 1: Scrape
   async function scrapeJobNode(state: State) {
-    console.log(`📡 Scraping: ${state.jobUrl}`);
+    console.log(`Scraping: ${state.jobUrl}`);
     progressCallback({ step: 1, total: 10, message: "Scraping job posting...", status: "progress" });
     
     const jobRaw = await scrapeJobPosting(agent, state.jobUrl);
-    console.log(`✅ Scraped ${jobRaw?.length || 0} chars`);
+    console.log(`Scraped ${jobRaw?.length || 0} chars`);
     
     return { jobRaw };
   }
 
   // Node 2: Parse
   async function parseJobNode(state: State) {
-    console.log(`📋 Parsing job data...`);
+    console.log(`Parsing job data...`);
     progressCallback({ step: 2, total: 10, message: "Parsing job details...", status: "progress" });
     
     const jobInfo = await parseJobPosting(agent, state.jobRaw);
-    console.log(`✅ Parsed job: ${jobInfo?.title || 'Unknown'}`);
+    console.log(`Parsed job: ${jobInfo?.title || 'Unknown'}`);
     
     return { jobInfo };
   }
 
   // Node 3: Analyze Resume
   async function analyzeResumeNode(state: State) {
-    console.log(`👤 Analyzing resume...`);
+    console.log(`Analyzing resume...`);
     progressCallback({ step: 3, total: 10, message: "Analyzing your resume...", status: "progress" });
     
     const resumeProfile = await analyzeResume(agent, state.resumeText, state.linkedinText);
-    console.log(`✅ Resume analyzed: ${resumeProfile?.name || 'Candidate'}`);
+    console.log(`Resume analyzed: ${resumeProfile?.name || 'Candidate'}`);
     
     return { resumeProfile };
   }
 
   // Node 4: Compute Gaps
   async function computeGapsNode(state: State) {
-    console.log(`🧩 Computing gaps...`);
+    console.log(`Computing gaps...`);
     progressCallback({ step: 4, total: 10, message: "Computing skill gaps...", status: "progress" });
     
     const gaps = await analyzeGaps(agent, state.jobInfo, state.resumeProfile);
-    console.log(`✅ Found ${gaps?.technical_missing?.length || 0} missing skills`);
+    console.log(`Found ${gaps?.technical_missing?.length || 0} missing skills`);
     
     return { gaps };
   }
@@ -86,7 +86,7 @@ export function createJobAnalysisWorkflow(
     progressCallback({ step: 5, total: 10, message: "Researching company...", status: "progress" });
     
     const company = await getCompanyInsights(agent, state.jobUrl, state.jobInfo);
-    console.log(`✅ Company: ${company?.name || state.jobInfo?.company || 'Unknown'}`);
+    console.log(`Company: ${company?.name || state.jobInfo?.company || 'Unknown'}`);
     
     return { company };
   }
@@ -97,14 +97,14 @@ export function createJobAnalysisWorkflow(
     progressCallback({ step: 6, total: 10, message: "Scoring your match...", status: "progress" });
     
     const score = await scoreMatch(agent, state.jobInfo, state.resumeProfile, state.company, state.gaps);
-    console.log(`✅ Score: ${score?.overall_score || 0}%`);
+    console.log(`Score: ${score?.overall_score || 0}%`);
     
     return { score };
   }
 
   // Node 7a: Full Analysis
   async function fullAnalysisNode(state: State) {
-    console.log("✅ Running FULL analysis (high score)");
+    console.log("Running FULL analysis (high score)");
     
     progressCallback({ step: 7, total: 10, message: "Writing cover letter...", status: "progress" });
     const coverLetter = await writeCoverLetter(agent, state.jobInfo, state.resumeProfile, state.company, state.score, state.gaps);
@@ -117,7 +117,7 @@ export function createJobAnalysisWorkflow(
     try {
       interviewPrep = await generateInterviewPrep(agent, state.jobInfo, state.resumeText, state.jobInfo?.company || "Company");
     } catch (error) {
-      console.error("⚠️ Interview prep failed:", error.message);
+      console.error("Interview prep failed:", error.message);
     }
     
     progressCallback({ step: 10, total: 10, message: "Generating visualizations...", status: "progress" });
@@ -125,7 +125,7 @@ export function createJobAnalysisWorkflow(
     try {
       visualizations = await generateCareerVisualizations(agent, state.resumeProfile, state.jobInfo, state.gaps);
     } catch (error) {
-      console.error("⚠️ Visualization failed:", error.message);
+      console.error("Visualization failed:", error.message);
     }
     
     return { coverLetter, rewrite, interviewPrep, visualizations };
@@ -133,7 +133,7 @@ export function createJobAnalysisWorkflow(
 
   // Node 7b: Quick Feedback
   async function quickFeedbackNode(state: State) {
-    console.log("⚠️ Running QUICK feedback (low score)");
+    console.log("Running QUICK feedback (low score)");
     
     progressCallback({ step: 7, total: 10, message: "Generating quick feedback (low match score)...", status: "progress" });
     const rewrite = await rewriteResume(agent, state.jobInfo, state.resumeProfile, state.gaps, state.score);
@@ -153,10 +153,10 @@ export function createJobAnalysisWorkflow(
     console.log(`🔀 Routing decision: Score = ${score}%`);
     
     if (score >= 60) {
-      console.log("   ✅ High score → Full analysis path");
+      console.log("   High score → Full analysis path");
       return "fullAnalysis";
     } else {
-      console.log("   ⚠️ Low score → Quick feedback path");
+      console.log("   Low score → Quick feedback path");
       return "quickFeedback";
     }
   }
@@ -195,7 +195,7 @@ export async function runJobAnalysisWorkflow(
   linkedinText: string,
   progressCallback: (data: any) => void
 ) {
-  console.log("🚀 Starting LangGraph workflow...");
+  console.log("Starting LangGraph workflow...");
   console.log(`   Job URL: ${jobUrl}`);
   console.log(`   Resume length: ${resumeText.length} chars`);
   
@@ -221,7 +221,7 @@ export async function runJobAnalysisWorkflow(
   
   const result = await workflow.invoke(initialState);
   
-  console.log("✅ LangGraph workflow complete!");
+  console.log("LangGraph workflow complete!");
   console.log(`   Final score: ${result.score?.overall_score || 0}%`);
   
   return result;

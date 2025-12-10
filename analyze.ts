@@ -156,7 +156,7 @@ ${company.recent_news && company.recent_news.length > 0 ? `### Recent News\n${co
 
 ## MISSING KEYWORDS
 
-${gaps.strengths && gaps.strengths.length > 0 ? `### Your Strengths (What You Have)\n${gaps.strengths.map(s => `- ${s}`).join('\n')}\n` : ''}
+${gaps.strengths && gaps.strengths.length > 0 ? `### ✅ Your Strengths (What You Have)\n${gaps.strengths.map(s => `- ${s}`).join('\n')}\n` : ''}
 
 ### Technical Skills Not on Resume:
 ${gaps.technical_missing?.map(s => `- ${s}`).join('\n') || gaps.missing_skills?.map(s => `- ${s}`).join('\n') || '- None identified'}
@@ -173,11 +173,11 @@ ${gaps.framework_missing?.map(f => `- ${f}`).join('\n') || '- None identified'}
 ### Certifications:
 ${gaps.certifications_missing?.map(c => `- ${c}`).join('\n') || '- None identified'}
 
-${gaps.addressable_gaps && gaps.addressable_gaps.length > 0 ? `### Addressable Gaps (Can Highlight in Interview)\n${gaps.addressable_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
+${gaps.addressable_gaps && gaps.addressable_gaps.length > 0 ? `### 💡 Addressable Gaps (Can Highlight in Interview)\n${gaps.addressable_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
 
-${gaps.critical_gaps && gaps.critical_gaps.length > 0 ? `### Critical Gaps\n${gaps.critical_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
+${gaps.critical_gaps && gaps.critical_gaps.length > 0 ? `### ⚠️ Critical Gaps\n${gaps.critical_gaps.map(g => `- ${g}`).join('\n')}\n` : ''}
 
-${gaps.recommendations && gaps.recommendations.length > 0 ? `### Recommendations\n${gaps.recommendations.map(r => `- ${r}`).join('\n')}\n` : ''}
+${gaps.recommendations && gaps.recommendations.length > 0 ? `### 📋 Recommendations\n${gaps.recommendations.map(r => `- ${r}`).join('\n')}\n` : ''}
 
 ---
 
@@ -212,11 +212,11 @@ ${rewrite.keywords_to_add && rewrite.keywords_to_add.length > 0 ? `### Keywords 
 
 ${rewrite.sections_to_emphasize && rewrite.sections_to_emphasize.length > 0 ? `### Sections to Emphasize\n${rewrite.sections_to_emphasize.map(s => `- ${s}`).join('\n')}\n` : ''}
 
-${rewrite.bullet_improvements && rewrite.bullet_improvements.length > 0 ? `### Bullet Point Improvements\n\n${rewrite.bullet_improvements.map(b => `**${b.section}**\n\n Before:\n> ${b.original}\n\n After:\n> ${b.improved}\n\n💡 Why: ${b.rationale || 'Improves clarity and impact'}\n`).join('\n')}\n` : ''}
+${rewrite.bullet_improvements && rewrite.bullet_improvements.length > 0 ? `### Bullet Point Improvements\n\n${rewrite.bullet_improvements.map(b => `**${b.section}**\n\n❌ Before:\n> ${b.original}\n\n✅ After:\n> ${b.improved}\n\n💡 Why: ${b.rationale || 'Improves clarity and impact'}\n`).join('\n')}\n` : ''}
 
 ---
 
-## INTERVIEW PREPARATION
+## INTERVIEW PREPARATION 
 
 ${interviewPrep ? `
 ${interviewPrep.rag_stats ? `*Retrieved using ${interviewPrep.rag_stats.retrieval_method} - ${interviewPrep.rag_stats.total_retrieved} questions analyzed, avg relevance: ${(interviewPrep.rag_stats.avg_relevance * 100).toFixed(1)}%*\n` : ''}
@@ -244,7 +244,7 @@ ${interviewPrep.emphasis_points.map(p => `- ${p}`).join('\n')}
 ### 📚 Preparation Tips
 ${interviewPrep.preparation_tips.map(t => `- ${t}`).join('\n')}
 
-*Questions retrieved from knowledge base using RAG with hybrid search*
+*Questions retrieved from knowledge base using advanced RAG with hybrid search*
 ` : '⚠️ Interview prep not available (RAG database not initialized)'}
 
 ---
@@ -252,6 +252,7 @@ ${interviewPrep.preparation_tips.map(t => `- ${t}`).join('\n')}
 ## 🎨 CAREER PATH VISUALIZATION
 
 ${visualizations ? `
+
 ### Interactive Visualizations
 
 The following interactive visualizations have been generated:
@@ -313,10 +314,10 @@ ${resumeProfile.experience && resumeProfile.experience.length > 0 ? `### Recent 
 await Deno.mkdir("./output", { recursive: true });
 await Deno.writeTextFile("./output/analysis.md", output);
 
-console.log("✅ DONE!\n");
-console.log("📄 Saved to: ./output/analysis.md");
+console.log("DONE!\n");
+console.log("Saved to: ./output/analysis.md");
 if (visualizations) {
-  console.log("🎨 Visualizations: ./output/visualizations/");
+  console.log("Visualizations: ./output/visualizations/");
 }
 console.log("\nView with:");
 console.log("  cat ./output/analysis.md");

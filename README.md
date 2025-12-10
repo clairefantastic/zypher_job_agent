@@ -270,35 +270,6 @@ workflow.addConditionalEdges("scoreMatch", routeAfterScore, {
 
 ---
 
-## 🧪 Testing
-
-### Test RAG System
-```bash
-# Verify database
-deno run -A --env -e '
-import { getQuestionCount } from "./agents/rag-advanced.ts";
-console.log("Questions in DB:", await getQuestionCount());
-'
-```
-
-Expected: `Questions in DB: 40`
-
-### Test Advanced RAG
-```bash
-deno run -A --env test-advanced-rag.ts
-```
-
-### End-to-End Test
-```bash
-# High match example
-deno run -A --env analyze.ts "https://jobs.ashbyhq.com/anthropic/..."
-
-# Low match example (should trigger quick feedback)
-deno run -A --env analyze.ts "https://jobs.example.com/senior-ml-engineer"
-```
-
----
-
 ## 🛠️ Technology Stack
 
 ### AI & ML

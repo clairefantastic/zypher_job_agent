@@ -2,81 +2,171 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skills Radar Chart</title>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background: transparent;
+            padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
+        
         .container {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 800px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        canvas {
-            display: block;
+            width: 100%;
+            max-width: 700px;
             margin: 0 auto;
         }
+        
+        h1 {
+            text-align: center;
+            color: #e6edf3;
+            margin-bottom: 30px;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+        
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* 1:1 Aspect Ratio */
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
         .legend {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
-            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            gap: 20px;
+            padding: 0 10px;
         }
+        
         .legend-item {
             display: flex;
             align-items: center;
             gap: 8px;
         }
+        
         .legend-color {
             width: 20px;
             height: 20px;
             border-radius: 4px;
+            flex-shrink: 0;
+        }
+        
+        .legend-text {
+            color: #e6edf3;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+            }
+            
+            .legend {
+                margin-top: 20px;
+                gap: 15px;
+            }
+            
+            .legend-text {
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .legend {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎯 Skills Gap Analysis</h1>
-        <canvas id="radarChart" width="600" height="600"></canvas>
+        <div class="canvas-wrapper">
+            <canvas id="radarChart"></canvas>
+        </div>
         <div class="legend">
             <div class="legend-item">
                 <div class="legend-color" style="background: rgba(102, 126, 234, 0.5);"></div>
-                <span>Your Skills</span>
+                <span class="legend-text">Your Skills</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: rgba(255, 99, 132, 0.5);"></div>
-                <span>Required Skills</span>
+                <span class="legend-text">Required Skills</span>
             </div>
         </div>
     </div>
     
     <script>
+        const skills = [];
+        
+        // Get canvas and set up responsive sizing
         const canvas = document.getElementById('radarChart');
         const ctx = canvas.getContext('2d');
-        const centerX = 300;
-        const centerY = 300;
-        const maxRadius = 250;
         
-        const skills = [{"skill":"BS+ in Computer Science (or related) with strong fundamentals (algorithms, data structures, systems)","current":20,"required":100},{"skill":"Proficiency in a high-level programming language (Java or Python preferred)","current":85,"required":100},{"skill":"Experience contributing to developer-facing or production systems","current":20,"required":100},{"skill":"Curiosity and eagerness to learn about AI/LLM application patterns","current":20,"required":100},{"skill":"Strong communication skills; comfortable working with engineers in a fast, collaborative environment","current":20,"required":100}];
+        function resizeCanvas() {
+            const wrapper = canvas.parentElement;
+            const size = wrapper.offsetWidth;
+            
+            // Set actual canvas size (for sharp rendering)
+            canvas.width = size;
+            canvas.height = size;
+            
+            // Redraw
+            drawRadar();
+        }
         
-        // Draw radar background
-        function drawRadarBackground() {
-            ctx.strokeStyle = '#e0e0e0';
-            ctx.lineWidth = 1;
+        function drawRadar() {
+            const size = canvas.width;
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const maxRadius = size * 0.38; // 38% of canvas size for padding
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Draw radar background
+            drawRadarBackground(centerX, centerY, maxRadius, size);
+            
+            // Draw skill polygons
+            drawSkillPolygon(skills.map(s => s.required), 'rgba(255, 99, 132, 0.2)', centerX, centerY, maxRadius);
+            drawSkillPolygon(skills.map(s => s.current), 'rgba(102, 126, 234, 0.2)', centerX, centerY, maxRadius);
+        }
+        
+        function drawRadarBackground(centerX, centerY, maxRadius, canvasSize) {
+            ctx.strokeStyle = '#30363d';
+            ctx.lineWidth = Math.max(1, canvasSize / 600);
             
             // Concentric circles
             for (let i = 1; i <= 5; i++) {
@@ -87,6 +177,9 @@
             
             // Radial lines and labels
             const angleStep = (2 * Math.PI) / skills.length;
+            const fontSize = Math.max(12, canvasSize / 50);
+            ctx.font = fontSize + 'px sans-serif';
+            
             skills.forEach((skill, i) => {
                 const angle = i * angleStep - Math.PI / 2;
                 const x = centerX + maxRadius * Math.cos(angle);
@@ -98,24 +191,38 @@
                 ctx.lineTo(x, y);
                 ctx.stroke();
                 
-                // Label
-                const labelX = centerX + (maxRadius + 30) * Math.cos(angle);
-                const labelY = centerY + (maxRadius + 30) * Math.sin(angle);
-                ctx.fillStyle = '#333';
-                ctx.font = '14px sans-serif';
+                // Label (with better positioning)
+                const labelDistance = maxRadius * 1.25;
+                const labelX = centerX + labelDistance * Math.cos(angle);
+                const labelY = centerY + labelDistance * Math.sin(angle);
+                
+                ctx.fillStyle = '#e6edf3';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(skill.skill, labelX, labelY);
+                
+                // Multi-line text for long skill names on small screens
+                const skillName = skill.skill;
+                if (canvasSize < 400 && skillName.length > 10) {
+                    const words = skillName.split(' ');
+                    if (words.length > 1) {
+                        ctx.fillText(words[0], labelX, labelY - fontSize / 2);
+                        ctx.fillText(words.slice(1).join(' '), labelX, labelY + fontSize / 2);
+                    } else {
+                        ctx.fillText(skillName, labelX, labelY);
+                    }
+                } else {
+                    ctx.fillText(skillName, labelX, labelY);
+                }
             });
         }
         
-        // Draw skill polygon
-        function drawSkillPolygon(scores, color) {
+        function drawSkillPolygon(scores, color, centerX, centerY, maxRadius) {
             const angleStep = (2 * Math.PI) / skills.length;
+            const lineWidth = Math.max(2, canvas.width / 300);
             
             ctx.fillStyle = color;
             ctx.strokeStyle = color.replace('0.2', '0.8');
-            ctx.lineWidth = 2;
+            ctx.lineWidth = lineWidth;
             
             ctx.beginPath();
             scores.forEach((score, i) => {
@@ -135,10 +242,15 @@
             ctx.stroke();
         }
         
-        // Render
-        drawRadarBackground();
-        drawSkillPolygon(skills.map(s => s.required), 'rgba(255, 99, 132, 0.2)');
-        drawSkillPolygon(skills.map(s => s.current), 'rgba(102, 126, 234, 0.2)');
+        // Initial draw
+        resizeCanvas();
+        
+        // Redraw on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeCanvas, 100);
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,1 @@
+Alex Johnson, 5 years experience as Software Engineer. Expert in Python and Django. Built microservices on AWS. Implemented CI/CD pipelines. Led team of 3.

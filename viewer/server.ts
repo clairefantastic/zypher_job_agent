@@ -14,16 +14,17 @@ import { generateInterviewPrep } from "../agents/interview-prep.ts";
 import { getQuestionCount } from "../agents/rag-advanced.ts";
 import { generateCareerVisualizations } from "../agents/visualizer.ts";
 import { runJobAnalysisWorkflow } from "../agents/langgraph-workflow.ts";
+import { getCachedAnalysis, cacheAnalysis } from '../agents/cache.ts';
 
 // Initialize Zypher agent once
 let agent: ZypherAgent | null = null;
 
 async function initializeAgent() {
   if (agent) return agent;
-  
+
   console.log("🧠 Initializing Zypher Agent...");
   const zypherContext = await createZypherContext(Deno.cwd());
-  
+
   agent = new ZypherAgent(
     zypherContext,
     new AnthropicModelProvider({
@@ -47,20 +48,30 @@ async function initializeAgent() {
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
   console.log("✅ Agent ready!");
-  
+
   return agent;
 }
 
 // Run analysis pipeline
-async function runAnalysis(
-  jobUrl: string,
-  resumeText: string,
-  linkedinText: string,
-  progressCallback: (data: any) => void
-) {
+async function runAnalysis(jobUrl, resumeText, linkedinText, progressCallback) {
+  // CHECK CACHE FIRST
+  const cached = await getCachedAnalysis(jobUrl, resumeText);
+  if (cached) {
+    console.log("CACHE HIT - Returning cached result");
+    progressCallback({
+      step: 10,
+      total: 10,
+      message: "Complete (from cache)!",
+      status: "complete",
+      report: cached.markdown,
+      visualizations: cached.visualizations
+    });
+    return cached.markdown;
+  }
+
+  // NOT IN CACHE - RUN NORMAL WORKFLOW
   const agent = await initializeAgent();
-  
-  // Use LangGraph workflow instead of linear pipeline
+
   const result = await runJobAnalysisWorkflow(
     agent,
     jobUrl,
@@ -68,8 +79,7 @@ async function runAnalysis(
     linkedinText,
     progressCallback
   );
-  
-  // Generate markdown from result
+
   const markdown = generateMarkdown(
     result.jobInfo,
     result.resumeProfile,
@@ -81,7 +91,15 @@ async function runAnalysis(
     result.interviewPrep,
     result.visualizations,
   );
-  
+
+  // CACHE THE RESULT
+  await cacheAnalysis(jobUrl, resumeText, {
+    markdown,
+    visualizations: result.visualizations,
+    score: result.score,
+    timestamp: Date.now()
+  });
+
   progressCallback({ 
     step: 10, 
     total: 10, 
@@ -90,7 +108,7 @@ async function runAnalysis(
     report: markdown,
     visualizations: result.visualizations
   });
-  
+
   return markdown;
 }
 
@@ -114,7 +132,7 @@ Deno.serve({ port: 3000 }, async (req) => {
       const stream = new ReadableStream({
         async start(controller) {
           const encoder = new TextEncoder();
-          
+
           const sendProgress = (data: any) => {
             controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
           };
@@ -124,9 +142,9 @@ Deno.serve({ port: 3000 }, async (req) => {
             controller.close();
           } catch (error) {
             console.error("Analysis error:", error);
-            sendProgress({ 
-              status: "error", 
-              message: "Analysis failed: " + error.message 
+            sendProgress({
+              status: "error",
+              message: "Analysis failed: " + error.message
             });
             controller.close();
           }
@@ -148,21 +166,21 @@ Deno.serve({ port: 3000 }, async (req) => {
       });
     }
   }
-  
+
   // API: RAG Status
   if (url.pathname === "/api/rag-status" && req.method === "GET") {
     try {
       const count = await getQuestionCount();
-      return new Response(JSON.stringify({ 
+      return new Response(JSON.stringify({
         ready: count > 0,
-        questionCount: count 
+        questionCount: count
       }), {
         headers: { "content-type": "application/json" }
       });
     } catch (error) {
-      return new Response(JSON.stringify({ 
+      return new Response(JSON.stringify({
         ready: false,
-        error: error.message 
+        error: error.message
       }), {
         status: 500,
         headers: { "content-type": "application/json" }

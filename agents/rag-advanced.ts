@@ -10,6 +10,7 @@ const openai = new OpenAI({
 
 let collection: any = null;
 let initPromise: Promise<any> | null = null;
+let documentCorpus: string[] = []; // Store all documents for BM25 training
 
 // Custom OpenAI Embedding Function for ChromaDB
 class OpenAIEmbeddingFunction {
@@ -41,7 +42,7 @@ async function initCollection() {
   if (initPromise) return initPromise;
   
   initPromise = (async () => {
-    console.log("🔌 Connecting to ChromaDB at http://localhost:8000...");
+    console.log("Connecting to ChromaDB at http://localhost:8000...");
     
     const chroma = new ChromaClient({
       path: "http://localhost:8000"
@@ -65,6 +66,9 @@ async function initCollection() {
         embeddingFunction: embeddingFunction
       });
       console.log("Connected to existing collection");
+      
+      // Load corpus for BM25
+      await loadDocumentCorpus();
     } catch {
       collection = await chroma.createCollection({
         name: "interview_questions",
@@ -78,6 +82,21 @@ async function initCollection() {
   })();
   
   return initPromise;
+}
+
+// Load all documents into corpus for BM25 training
+async function loadDocumentCorpus() {
+  try {
+    const coll = await initCollection();
+    const allDocs = await coll.get({});
+    
+    if (allDocs.documents && allDocs.documents.length > 0) {
+      documentCorpus = allDocs.documents;
+      console.log(`Loaded ${documentCorpus.length} documents for BM25 training`);
+    }
+  } catch (error) {
+    console.log("Could not load corpus, BM25 will use simplified scoring");
+  }
 }
 
 // Generate embedding
@@ -106,45 +125,67 @@ function cosineSimilarity(a: number[], b: number[]): number {
   return dotProduct / (magnitudeA * magnitudeB);
 }
 
-// Simple BM25-like keyword scoring
-function keywordScore(query: string, document: string): number {
+// UPGRADED: Proper BM25 scoring with IDF and document length normalization
+function keywordScore(query: string, document: string, allDocuments: string[] = documentCorpus): number {
   const queryTerms = query.toLowerCase().split(/\s+/).filter(t => t.length > 2);
   const docTerms = document.toLowerCase().split(/\s+/);
   
+  // BM25 parameters (Okapi BM25)
+  const k1 = 1.5;  // Term frequency saturation parameter
+  const b = 0.75;   // Length normalization parameter
+  
+  // Calculate average document length
+  const avgDocLength = allDocuments.length > 0
+    ? allDocuments.reduce((sum, doc) => sum + doc.split(/\s+/).length, 0) / allDocuments.length
+    : docTerms.length;
+  
+  const docLength = docTerms.length;
+  
   let score = 0;
+  
   for (const term of queryTerms) {
-    // Count occurrences
-    const frequency = docTerms.filter(t => t.includes(term) || term.includes(t)).length;
-    if (frequency > 0) {
-      // TF-IDF inspired scoring
-      score += Math.log(1 + frequency);
+    // Calculate term frequency in this document
+    const tf = docTerms.filter(t => t.includes(term) || term.includes(t)).length;
+    
+    if (tf > 0) {
+      // Calculate IDF (inverse document frequency)
+      const docsContainingTerm = allDocuments.filter(d => 
+        d.toLowerCase().includes(term)
+      ).length || 1;
+      
+      const idf = Math.log((allDocuments.length + 1) / (docsContainingTerm + 0.5));
+      
+      // BM25 formula
+      const numerator = tf * (k1 + 1);
+      const denominator = tf + k1 * (1 - b + b * (docLength / avgDocLength));
+      
+      score += idf * (numerator / denominator);
     }
   }
   
   return score;
 }
 
-// Query expansion using LLM
+// Query expansion using LLM - now generates more targeted queries
 async function expandQuery(
   agent: ZypherAgent,
   query: string
 ): Promise<string[]> {
-  // Limit query length for expansion
   const truncatedQuery = query.slice(0, 500);
   
-  const prompt = `Given this job description snippet, generate 3 different search queries that capture different aspects:
+  const prompt = `Given this job description snippet, generate 3 different search queries that capture different aspects.
 
-Original query: "${truncatedQuery}"
+Each query should focus on:
+1. Core technical skills and specific technologies/frameworks
+2. Experience level, seniority, and years required
+3. Domain expertise, industry context, and soft skills
 
-Generate queries that focus on:
-1. Technical skills and specific technologies mentioned
-2. Experience level, years of experience, and seniority
-3. Industry domain, company type, and role context
+Return ONLY a JSON array of exactly 3 strings. Each query should be 5-15 words and use specific technical terms.
 
-Return ONLY a JSON array of exactly 3 strings, nothing else. Each string should be 5-15 words.
+Job description: "${truncatedQuery}"
 
 Example output:
-["senior python engineer machine learning", "5 years backend development microservices", "fintech trading systems distributed computing"]`;
+["senior python django microservices 5 years", "machine learning pytorch tensorflow production", "team leadership agile collaborative environment"]`;
 
   try {
     const result = await runJsonTask<string[]>(
@@ -154,13 +195,11 @@ Example output:
       "query-expansion"
     );
     
-    // Validate we got 3 queries
     if (!Array.isArray(result) || result.length === 0) {
       console.log("Query expansion returned invalid result, using original");
       return [truncatedQuery];
     }
     
-    // Take up to 3 queries
     const queries = result.slice(0, 3).filter(q => q && q.trim().length > 0);
     
     console.log(`Expanded into ${queries.length} query variations`);
@@ -181,7 +220,6 @@ async function vectorSearch(
     const coll = await initCollection();
     const queryEmbedding = await embed(query);
     
-    // Filter by company if specified and known
     const knownCompanies = ['Google', 'Meta', 'Amazon', 'Microsoft', 'Startup'];
     const shouldFilter = company && knownCompanies.includes(company);
     const where = shouldFilter ? { company } : undefined;
@@ -210,7 +248,7 @@ async function vectorSearch(
   }
 }
 
-// Keyword search using BM25-like scoring
+// UPGRADED: Keyword search with proper BM25 scoring
 async function keywordSearch(
   query: string,
   topK: number
@@ -223,31 +261,34 @@ async function keywordSearch(
     
     if (!allResults.documents) return [];
     
-    // Score each document
+    // Score each document using BM25
     const scored = allResults.documents.map((doc: string, idx: number) => ({
       id: allResults.ids[idx],
       question: doc,
       metadata: allResults.metadatas[idx],
-      score: keywordScore(query, doc)
+      score: keywordScore(query, doc, allResults.documents)
     }));
     
     // Filter out zero scores and sort
-    return scored
+    const filtered = scored
       .filter(item => item.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, topK);
+    
+    console.log(`   Keyword search found ${filtered.length} matches (BM25 scoring)`);
+    return filtered;
   } catch (error) {
     console.error("Keyword search failed:", error);
     return [];
   }
 }
 
-// Combine multiple ranked lists using Reciprocal Rank Fusion
+// UPGRADED: Reciprocal Rank Fusion with configurable k parameter
 function reciprocalRankFusion(
-  results: Array<{ id: string; score: number; source: string }>[]
-): Array<{ id: string; score: number }> {
+  results: Array<{ id: string; score: number; source: string }>[],
+  k: number = 60  // RRF constant (typical value is 60)
+): Array<{ id: string; score: number; sources: string }> {
   const scoreMap = new Map<string, { score: number; sources: Set<string> }>();
-  const k = 60; // RRF constant (typical value)
   
   // Apply RRF formula: score = sum(1 / (k + rank))
   results.forEach(resultSet => {
@@ -269,7 +310,7 @@ function reciprocalRankFusion(
     .sort((a, b) => b.score - a.score);
 }
 
-// Store questions
+// Store questions (same as before)
 export async function storeQuestions(
   company: string, 
   role: string,
@@ -301,10 +342,13 @@ export async function storeQuestions(
     metadatas
   });
   
+  // Reload corpus after adding
+  await loadDocumentCorpus();
+  
   console.log(`Stored ${questions.length} questions for ${company} - ${role}`);
 }
 
-// Main retrieval function
+// UPGRADED: Main retrieval function with hybrid search
 export async function getRelevantQuestionsAdvanced(
   agent: ZypherAgent,
   jobDescription: string,
@@ -318,7 +362,7 @@ export async function getRelevantQuestionsAdvanced(
   retrieval_method: string;
 }>> {
   try {
-    console.log("Running RAG pipeline...");
+    console.log("Running UPGRADED hybrid RAG pipeline...");
     const startTime = Date.now();
     
     // Step 1: Query expansion
@@ -340,16 +384,18 @@ export async function getRelevantQuestionsAdvanced(
           score: r.score,
           source: `vector-q${i+1}` 
         })));
+        console.log(`      Vector: ${vectorResults.length} results`);
       }
       
-      // Keyword search
+      // Keyword search (with BM25)
       const keywordResults = await keywordSearch(query, topK * 2);
       if (keywordResults.length > 0) {
         searchResults.push(keywordResults.map(r => ({ 
           id: r.id, 
           score: r.score,
-          source: `keyword-q${i+1}` 
+          source: `bm25-q${i+1}` 
         })));
+        console.log(`      BM25: ${keywordResults.length} results`);
       }
     }
     
@@ -361,8 +407,8 @@ export async function getRelevantQuestionsAdvanced(
     }
     
     // Step 3: Reciprocal Rank Fusion
-    const fused = reciprocalRankFusion(searchResults);
-    console.log(`   Fused into ${fused.length} unique results`);
+    const fused = reciprocalRankFusion(searchResults, 60);
+    console.log(`   RRF fused into ${fused.length} unique results`);
     
     // Step 4: Retrieve full documents for top results
     const coll = await initCollection();
@@ -383,11 +429,11 @@ export async function getRelevantQuestionsAdvanced(
       company: finalResults.metadatas[idx].company,
       category: finalResults.metadatas[idx].category,
       relevance: fused[idx].score,
-      retrieval_method: 'hybrid-rrfusion'
+      retrieval_method: 'hybrid-rrfusion-upgraded'
     }));
     
     const duration = Date.now() - startTime;
-    console.log(`RAG completed in ${duration}ms: ${questions.length} questions retrieved`);
+    console.log(`UPGRADED RAG completed in ${duration}ms: ${questions.length} questions retrieved`);
     
     return questions;
     
@@ -395,7 +441,6 @@ export async function getRelevantQuestionsAdvanced(
     console.error("RAG pipeline failed:", error);
     console.log("   Falling back to simple vector search...");
     
-    // Fallback to simple vector search
     try {
       const simple = await vectorSearch(jobDescription.slice(0, 500), topK, company);
       return simple.map(r => ({
@@ -412,7 +457,7 @@ export async function getRelevantQuestionsAdvanced(
   }
 }
 
-// Check if collection has data
+// Helper functions (same as before)
 export async function getQuestionCount(): Promise<number> {
   try {
     const coll = await initCollection();
@@ -424,7 +469,6 @@ export async function getQuestionCount(): Promise<number> {
   }
 }
 
-// Clear all data
 export async function clearAllQuestions() {
   try {
     const chroma = new ChromaClient({
@@ -433,6 +477,7 @@ export async function clearAllQuestions() {
     await chroma.deleteCollection({ name: "interview_questions" });
     collection = null;
     initPromise = null;
+    documentCorpus = [];
     console.log("Cleared all questions");
   } catch (error) {
     console.error("Failed to clear:", error);

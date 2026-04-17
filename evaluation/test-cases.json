@@ -1,0 +1,74 @@
+{
+  "test_cases": [
+    {
+      "job_description": "Senior Software Engineer, 5+ years experience, Python, Django, AWS, Microservices, CI/CD",
+      "resume": "Alex Johnson, 5 years experience as Software Engineer. Expert in Python and Django. Built microservices on AWS. Implemented CI/CD pipelines. Led team of 3.",
+      "expected_score": 90,
+      "expected_gaps": ["Kubernetes", "Machine Learning"],
+      "ground_truth": "Excellent match - candidate has exact required skills and experience level. Strong Python/Django background with AWS and CI/CD. Only missing nice-to-haves like K8s."
+    },
+    {
+      "job_description": "Machine Learning Engineer, 3+ years, Python, TensorFlow, PyTorch, MLOps, Production ML",
+      "resume": "Sarah Chen, 6 years software engineering. Python expert. Some coursework in ML. No production ML experience. Strong in backend development.",
+      "expected_score": 45,
+      "expected_gaps": ["TensorFlow", "PyTorch", "Production ML", "MLOps"],
+      "ground_truth": "Weak match - candidate lacks core ML engineering skills despite strong Python background. Would need significant upskilling in ML frameworks and production deployment."
+    },
+    {
+      "job_description": "Full Stack Developer, React, Node.js, TypeScript, MongoDB, 2+ years",
+      "resume": "Mike Rodriguez, 4 years full stack. React expert. Node.js and Express. TypeScript proficient. MongoDB and PostgreSQL. Built 5 production apps.",
+      "expected_score": 95,
+      "expected_gaps": [],
+      "ground_truth": "Perfect match - candidate exceeds all requirements with extensive experience in exact tech stack. No significant gaps."
+    },
+    {
+      "job_description": "DevOps Engineer, AWS, Kubernetes, Terraform, Docker, CI/CD, 4+ years",
+      "resume": "Jessica Lee, 3 years DevOps. AWS certified. Docker and Kubernetes experience. Jenkins CI/CD. No Terraform. Python scripting.",
+      "expected_score": 75,
+      "expected_gaps": ["Terraform", "1 more year experience"],
+      "ground_truth": "Good match - candidate has most core skills (AWS, K8s, Docker) but slightly under experience requirement and missing Terraform. Could learn Terraform quickly."
+    },
+    {
+      "job_description": "Frontend Developer, React, TypeScript, CSS, UI/UX design, 3+ years",
+      "resume": "Tom Wilson, 2 years frontend. React and JavaScript. Some TypeScript. Strong CSS. No formal design training. Built several personal projects.",
+      "expected_score": 65,
+      "expected_gaps": ["UI/UX design experience", "1 more year experience", "TypeScript expertise"],
+      "ground_truth": "Moderate match - candidate has technical skills but lacks experience requirement and design background. Personal projects show motivation but needs professional growth."
+    },
+    {
+      "job_description": "Data Engineer, SQL, Python, Spark, Airflow, ETL, Data Warehousing, 5+ years",
+      "resume": "Emily Davis, 7 years data engineering. SQL expert. Python and PySpark. Built ETL pipelines. Experience with Airflow. Snowflake data warehouse.",
+      "expected_score": 92,
+      "expected_gaps": [],
+      "ground_truth": "Excellent match - senior candidate with all required skills and extensive experience. Snowflake experience adds value beyond requirements."
+    },
+    {
+      "job_description": "Junior Developer, JavaScript, basic React, Git, any backend language, 0-2 years",
+      "resume": "Chris Martin, recent CS graduate. JavaScript and React coursework. Built class projects. GitHub portfolio. Node.js basics. Eager to learn.",
+      "expected_score": 80,
+      "expected_gaps": ["Professional experience", "Production systems"],
+      "ground_truth": "Good match for junior role - candidate has educational foundation and technical basics. Portfolio shows practical skills. Fits junior expectations."
+    },
+    {
+      "job_description": "Principal Engineer, Distributed Systems, Scalability, 10+ years, Team Leadership",
+      "resume": "David Kim, 8 years as senior engineer. Microservices architecture. Some leadership. No distributed systems specialization. Led 2 projects.",
+      "expected_score": 55,
+      "expected_gaps": ["2+ years experience", "Distributed systems expertise", "Principal-level leadership"],
+      "ground_truth": "Insufficient match - candidate lacks seniority level and specialized distributed systems experience required for principal role. Leadership experience is limited."
+    },
+    {
+      "job_description": "Mobile Developer, React Native, iOS and Android, 3+ years, App Store launches",
+      "resume": "Lisa Anderson, 4 years mobile dev. React Native expert. Launched 3 iOS apps and 2 Android apps. App Store optimization. Push notifications.",
+      "expected_score": 93,
+      "expected_gaps": [],
+      "ground_truth": "Excellent match - candidate has specific React Native expertise with proven track record of launches. Cross-platform experience exactly matches requirements."
+    },
+    {
+      "job_description": "Cybersecurity Engineer, Penetration Testing, Security Audits, OWASP, 5+ years",
+      "resume": "James Wilson, 3 years software engineer. Some security awareness. No penetration testing. No security certifications. Python scripting.",
+      "expected_score": 30,
+      "expected_gaps": ["Penetration testing", "Security audits", "OWASP", "2+ years experience", "Security certifications"],
+      "ground_truth": "Poor match - candidate is software engineer without security specialization. Missing all core security skills and certifications. Would need career transition."
+    }
+  ]
+}
